@@ -42,49 +42,32 @@ function deleteInvalids(array) {
 //--------------Problem-4-solution-Start-here-----------------------------------------
 function password(obj) {
   if (!obj.name || !obj.birthYear || !obj.siteName) {
-    return "Invalid";
+    return "invalid";
   }
   const name = obj.name;
   const birthYear = obj.birthYear.toString();
-  if (birthYear.length < 4) {
-    return "Invalid";
+  if (birthYear.length !== 4 || isNaN(obj.birthYear)) {
+    return "invalid";
   }
-  const siteName = obj.siteName;
+  const siteName = obj.siteName.charAt(0).toUpperCase() + obj.siteName.slice(1);
   const result = siteName + "#" + name + "@" + birthYear;
   return result;
 }
 //--------------Problem-4-solution-end-here------------------------------------------
 //--------------Problem-5-solution-Start-here-----------------------------------------
 function monthlySavings(array, livingCost) {
-  if (Array.isArray(array)) {
-    const sallery = [];
-    for (a = 0; a < array.length; a++) {
-      if (array[a] >= 3000) {
-        const tax = array[a] * 0.8;
-        sallery.push(tax); // result after subtract 20% of  the value greater than 3000.
-      } else {
-        sallery.push(array[a]); // if there is no value over 3000.
-      }
-    }
-    //sallery after tax
-    let totalSallery = 0;
-    for (x = 0; x < sallery.length; x++) {
-      totalSallery += sallery[x];
-    }
-    // total sallery - living cost
-    if (typeof livingCost === "number") {
-      let savings = totalSallery - livingCost;
-      if (savings < 0) {
-        return "earn more"; //if savings is less than 0.
-      } else {
-        return savings; // fianl result.
-      }
-    } else {
-      return "Invalid Input"; //if data type is not number
-    }
-  } else {
-    return "Invalid Input"; //if data type is not Array.
+  if (!Array.isArray(array) || typeof livingCost !== "number") {
+    return "invalid input";
   }
+  let totalIncome = 0;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] >= 3000) {
+      totalIncome += array[i] * 0.8;
+    } else {
+      totalIncome += array[i];
+    }
+  }
+  const savings = totalIncome - livingCost;
+  return savings >= 0 ? savings : "earn more";
 }
 //--------------Problem-5-solution-end-here------------------------------------------
-
